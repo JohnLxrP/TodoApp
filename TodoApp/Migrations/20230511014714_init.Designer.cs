@@ -12,8 +12,8 @@ using TodoApp.Data;
 namespace TodoApp.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20230316082645_useremailadded")]
-    partial class useremailadded
+    [Migration("20230511014714_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,7 +46,12 @@ namespace TodoApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Todos");
 
@@ -55,7 +60,7 @@ namespace TodoApp.Migrations
                         {
                             Id = 1,
                             Description = "For Birthday",
-                            DueDate = new DateTime(2023, 3, 17, 13, 56, 44, 896, DateTimeKind.Local).AddTicks(7787),
+                            DueDate = new DateTime(2023, 5, 12, 9, 47, 14, 113, DateTimeKind.Local).AddTicks(8028),
                             Status = false,
                             Title = "Shopping"
                         },
@@ -63,7 +68,7 @@ namespace TodoApp.Migrations
                         {
                             Id = 2,
                             Description = "In Jump Trainin",
-                            DueDate = new DateTime(2023, 3, 18, 13, 56, 44, 896, DateTimeKind.Local).AddTicks(7802),
+                            DueDate = new DateTime(2023, 5, 13, 9, 47, 14, 113, DateTimeKind.Local).AddTicks(8036),
                             Status = false,
                             Title = "Learn C#"
                         },
@@ -71,7 +76,7 @@ namespace TodoApp.Migrations
                         {
                             Id = 3,
                             Description = "In Jump Trainin",
-                            DueDate = new DateTime(2023, 3, 18, 13, 56, 44, 896, DateTimeKind.Local).AddTicks(7804),
+                            DueDate = new DateTime(2023, 5, 13, 9, 47, 14, 113, DateTimeKind.Local).AddTicks(8037),
                             Status = false,
                             Title = "Learn MSSQL"
                         });
@@ -104,9 +109,21 @@ namespace TodoApp.Migrations
                         new
                         {
                             Id = 1,
-                            DOB = new DateTime(2003, 3, 16, 13, 56, 44, 896, DateTimeKind.Local).AddTicks(7512),
+                            DOB = new DateTime(2003, 5, 11, 9, 47, 14, 113, DateTimeKind.Local).AddTicks(7948),
                             Name = "Administrator"
                         });
+                });
+
+            modelBuilder.Entity("TodoApp.Models.Todo", b =>
+                {
+                    b.HasOne("TodoApp.Models.User", null)
+                        .WithMany("Todos")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TodoApp.Models.User", b =>
+                {
+                    b.Navigation("Todos");
                 });
 #pragma warning restore 612, 618
         }

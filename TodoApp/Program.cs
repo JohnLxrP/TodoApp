@@ -17,7 +17,7 @@ builder.Services.AddScoped<TodoDbContext, TodoDbContext>();
 // if test environment then work with inmemroy object
 // else work with database
 // asp.net automatically configures objects using DI concept
-builder.Services.AddScoped<ITodoRepository, TodoDBRepository>();
+builder.Services.AddSingleton<ITodoRepository, TodoRestRepository>();
 
 //builder.Services.AddSingleton<ITodoRepository, TodoInMemoryRepository>();
 
